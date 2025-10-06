@@ -20,7 +20,6 @@ public class WaypointScreen extends Screen {
     private List<Waypoint> currentList;
     private final Screen parent;
 
-    // For creating/editing waypoints
     private TextFieldWidget nameField, xField, yField, zField, colorField;
     private boolean isCreatingOrEditing = false;
     private Waypoint waypointToEdit = null;
@@ -56,7 +55,7 @@ public class WaypointScreen extends Screen {
         if (currentTab == Tab.WAYPOINTS) {
             this.addDrawableChild(ButtonWidget.builder(Text.literal("Create New Waypoint"), b -> {
                 this.isCreatingOrEditing = true;
-                this.waypointToEdit = null; // Ensure we are creating, not editing
+                this.waypointToEdit = null;
                 this.clearChildren();
                 init();
             }).dimensions(this.width / 2 - 100, 55, 200, 20).build());
@@ -86,7 +85,6 @@ public class WaypointScreen extends Screen {
 
     private void initCreationMenu() {
         Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
-        String title = waypointToEdit == null ? "Creating new Waypoint" : "Editing Waypoint";
         
         nameField = new TextFieldWidget(textRenderer, this.width / 2 - 100, 60, 200, 20, Text.literal("Enter Waypoint Name"));
         xField = new TextFieldWidget(textRenderer, this.width / 2 - 100, 85, 60, 20, Text.literal("X"));
@@ -99,11 +97,12 @@ public class WaypointScreen extends Screen {
             xField.setText(String.valueOf((int)waypointToEdit.x));
             yField.setText(String.valueOf((int)waypointToEdit.y));
             zField.setText(String.valueOf((int)waypointToEdit.z));
-            colorField.setText(Integer.toHexString(waypointToEdit.color).substring(2).toUpperCase());
+            colorField.setText(Integer.toHexString(waypointToEdit.color & 0xFFFFFF).toUpperCase());
         } else {
              xField.setText(String.valueOf((int)playerPos.x));
              yField.setText(String.valueOf((int)playerPos.y));
              zField.setText(String.valueOf((int)playerPos.z));
+             colorField.setText("FFFFFF");
         }
 
         this.addDrawableChild(nameField);
@@ -112,7 +111,7 @@ public class WaypointScreen extends Screen {
         this.addDrawableChild(zField);
         this.addDrawableChild(colorField);
 
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Save Waypoint"), b -> saveWaypoint()).dimensions(this.width / 2 - 100, 140, 200, 20).build());
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Set New Waypoint"), b -> saveWaypoint()).dimensions(this.width / 2 - 100, 140, 200, 20).build());
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Cancel"), b -> {
             isCreatingOrEditing = false;
             refreshAndRebuild();
@@ -129,7 +128,6 @@ public class WaypointScreen extends Screen {
             double z = Double.parseDouble(zField.getText());
             int color = 0xFF000000 | Integer.parseInt(colorField.getText(), 16);
 
-            // If we were editing, delete the old one first
             if (waypointToEdit != null && !waypointToEdit.name.equals(name)) {
                 WaypointManager.deleteWaypoint(waypointToEdit.name);
             }
@@ -138,7 +136,7 @@ public class WaypointScreen extends Screen {
             isCreatingOrEditing = false;
             refreshAndRebuild();
         } catch (NumberFormatException e) {
-            // Handle error (e.g., show a message on screen)
+            // Handle error, maybe color the text field red
         }
     }
 
@@ -165,4 +163,4 @@ public class WaypointScreen extends Screen {
     public void close() {
         this.client.setScreen(this.parent);
     }
-              }
+            }
