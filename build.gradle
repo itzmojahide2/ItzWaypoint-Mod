@@ -3,8 +3,11 @@ plugins {
     id 'maven-publish'
 }
 
-version = project.mod_version
-group = project.maven_group
+// THIS IS THE IMPORTANT CHANGE
+// We are setting the version and group directly here
+version = "1.0.0"
+group = "com.itzmojahide"
+archivesBaseName = "itzwaypoint"
 
 sourceSets {
     main {
@@ -45,6 +48,3 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
-
-// THE SECTION THAT CAUSED THE ERROR HAS BEEN REMOVED.
-// This file is now correct.
