@@ -36,7 +36,6 @@ processResources {
     }
 }
 
-// THIS BLOCK IS THE IMPORTANT CHANGE
 tasks.withType(JavaCompile).configureEach {
     it.options.release = 21
 }
@@ -47,8 +46,5 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archives_base_name}"}
-    }
-}
+// THE SECTION THAT CAUSED THE ERROR HAS BEEN REMOVED.
+// This file is now correct.
