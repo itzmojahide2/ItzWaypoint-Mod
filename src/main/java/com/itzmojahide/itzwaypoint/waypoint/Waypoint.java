@@ -5,7 +5,7 @@ public class Waypoint {
     public double x, y, z;
     public int color;
 
-    public Waypoint() {}
+    public Waypoint() {} // Needed for GSON
 
     public Waypoint(String name, double x, double y, double z, int color) {
         this.name = name;
