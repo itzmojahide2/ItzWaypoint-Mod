@@ -151,9 +151,12 @@ public class WaypointScreen extends Screen {
         this.init();
     }
     
+    // THIS IS THE CORRECTED METHOD
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        // This line is now fixed and will work in Minecraft 1.21.1
         this.renderBackground(context, mouseX, mouseY, delta);
+        
         String title = isCreatingOrEditing ? (waypointToEdit == null ? "Creating new Waypoint" : "Editing Waypoint") : "ItzWaypoint";
         context.drawCenteredTextWithShadow(textRenderer, title, this.width / 2, 10, 0xFFFFFF);
         super.render(context, mouseX, mouseY, delta);
@@ -163,4 +166,4 @@ public class WaypointScreen extends Screen {
     public void close() {
         this.client.setScreen(this.parent);
     }
-            }
+}
