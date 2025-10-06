@@ -6,7 +6,6 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
-// This is the new part that fixes the problem
 sourceSets {
     main {
         java {
@@ -37,14 +36,15 @@ processResources {
     }
 }
 
+// THIS BLOCK IS THE IMPORTANT CHANGE
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 17
+    it.options.release = 21
 }
 
 java {
     withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
