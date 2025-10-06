@@ -6,6 +6,18 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
+// This is the new part that fixes the problem
+sourceSets {
+    main {
+        java {
+            srcDirs = ['1.21/src/main/java']
+        }
+        resources {
+            srcDirs = ['1.21/src/main/resources']
+        }
+    }
+}
+
 repositories {
     // Add repositories here
 }
