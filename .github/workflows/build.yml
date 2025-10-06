@@ -2,7 +2,7 @@ name: Build ItzWaypoint Mod
 
 on: [push, pull_request]
 
-jobs:
+jobs Rerun
   build:
     runs-on: ubuntu-latest
     steps:
@@ -15,16 +15,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           
-      - name: Setup Gradle and Clear Cache
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
-        with:
-          # This is a new setting to help with caching
-          cache-read-only: false
 
-      # THIS IS THE NEW, CRITICAL STEP
-      # This command forces the build to be clean
-      - name: Build with Gradle (Clean Build)
-        run: ./gradlew build --no-daemon --no-build-cache --refresh-dependencies
+      # THIS IS THE NEW COMMAND TO FORCE A CLEAN BUILD
+      - name: Build with Gradle (Forced Clean)
+        run: ./gradlew build --no-build-cache --refresh-dependencies
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
