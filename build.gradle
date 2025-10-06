@@ -3,15 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-// All required properties are now defined directly in this file.
-// This solves the "Could not get unknown property" error permanently.
-ext {
-    minecraft_version = '1.21.1'
-    yarn_mappings = '1.21.1+build.9'
-    loader_version = '0.15.11'
-    fabric_version = '0.96.4+1.21.1'
-}
-
 version = "1.0.0"
 group = "com.itzmojahide"
 archivesBaseName = "itzwaypoint"
@@ -28,19 +19,18 @@ sourceSets {
 }
 
 repositories {
-    maven {
-        name = 'Fabric'
-        url = 'https://maven.fabricmc.net/'
-    }
+    maven { url 'https://maven.fabricmc.net/' }
     mavenCentral()
 }
 
+// THIS IS THE NEW, SIMPLIFIED SECTION
+// All version numbers are written directly as text.
+// There are no variables, so no "property not found" errors can happen.
 dependencies {
-    // These lines now correctly read the properties defined at the top of this file.
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    minecraft "com.mojang:minecraft:1.21.1"
+    mappings "net.fabricmc:yarn:1.21.1+build.9:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.15.11"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.96.4+1.21.1"
 }
 
 processResources {
