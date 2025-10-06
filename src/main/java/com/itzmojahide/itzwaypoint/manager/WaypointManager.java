@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,9 +41,7 @@ public class WaypointManager {
         File file = WAYPOINTS_DIR.resolve(getSafeFilename(waypoint.name) + ".json").toFile();
         try (FileWriter writer = new FileWriter(file)) {
             GSON.toJson(waypoint, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public static void loadWaypoints() {
@@ -54,21 +51,15 @@ public class WaypointManager {
         for (File file : files) {
             try (FileReader reader = new FileReader(file)) {
                 Waypoint waypoint = GSON.fromJson(reader, Waypoint.class);
-                if (waypoint != null && waypoint.name != null) {
-                    waypoints.put(waypoint.name, waypoint);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                if (waypoint != null && waypoint.name != null) waypoints.put(waypoint.name, waypoint);
+            } catch (IOException e) { e.printStackTrace(); }
         }
     }
 
     public static void deleteWaypoint(String name) {
         waypoints.remove(name);
         File file = WAYPOINTS_DIR.resolve(getSafeFilename(name) + ".json").toFile();
-        if (file.exists()) {
-            file.delete();
-        }
+        if (file.exists()) file.delete();
     }
 
     public static void createDeathPoint(double x, double y, double z) {
@@ -80,9 +71,7 @@ public class WaypointManager {
         File file = DEATHPOINTS_DIR.resolve(getSafeFilename(name) + ".json").toFile();
         try (FileWriter writer = new FileWriter(file)) {
             GSON.toJson(deathPoint, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public static void loadDeathpoints() {
@@ -92,20 +81,14 @@ public class WaypointManager {
         for (File file : files) {
             try (FileReader reader = new FileReader(file)) {
                 Waypoint deathpoint = GSON.fromJson(reader, Waypoint.class);
-                if (deathpoint != null && deathpoint.name != null) {
-                    deathpoints.put(deathpoint.name, deathpoint);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                if (deathpoint != null && deathpoint.name != null) deathpoints.put(deathpoint.name, deathpoint);
+            } catch (IOException e) { e.printStackTrace(); }
         }
     }
 
     public static void deleteDeathPoint(String name) {
         deathpoints.remove(name);
         File file = DEATHPOINTS_DIR.resolve(getSafeFilename(name) + ".json").toFile();
-        if (file.exists()) {
-            file.delete();
-        }
+        if (file.exists()) file.delete();
     }
-            }
+}
