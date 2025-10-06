@@ -11,12 +11,11 @@ import org.lwjgl.glfw.GLFW;
 
 public class ItzWaypoint implements ClientModInitializer {
 
-    public static final String MOD_ID = "itzwaypoint";
     private static KeyBinding openMenuKey;
 
     @Override
     public void onInitializeClient() {
-        WaypointManager.init(); // Initialize the manager on startup
+        WaypointManager.init();
 
         openMenuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.itzwaypoint.open_menu",
@@ -27,7 +26,7 @@ public class ItzWaypoint implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (openMenuKey.wasPressed()) {
-                client.setScreen(new WaypointScreen(null)); // Pass null for main menu
+                client.setScreen(new WaypointScreen(null));
             }
         });
     }
